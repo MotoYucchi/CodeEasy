@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'M PLUS Rounded 1c', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -29,22 +29,21 @@
 </head>
 <body class="bg-slate-100">
 
-    <!-- Pyodide ローディング画面 -->
+    <audio id="bgm-player" src="bgm.mp3" loop></audio>
+
     <div id="loader-overlay">
         <div class="spinner"></div>
         <p class="mt-4 text-slate-600 font-semibold">実行環境を準備中...</p>
     </div>
 
     <div class="w-full max-w-md mx-auto p-4">
-        <!-- ホーム画面 (コース選択) -->
         <div id="home-screen" class="screen active">
             <header class="text-center mb-6">
                 <h1 class="text-3xl font-bold text-slate-800">CodeEasy</h1>
                 <p class="text-slate-500">挑戦するコースを選んでください</p>
             </header>
             <div id="course-list" class="space-y-4">
-                <!-- コースリストはJSで生成 -->
-            </div>
+                </div>
             <div class="mt-6 space-y-3">
                  <button id="create-quiz-btn" class="btn w-full bg-teal-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-teal-600">新しい問題を作成</button>
                  <button onclick="document.getElementById('import-file-input').click()" class="btn w-full bg-slate-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-slate-700">問題をインポート</button>
@@ -52,7 +51,6 @@
             </div>
         </div>
 
-        <!-- クイズ画面 -->
         <div id="quiz-screen" class="screen">
             <header class="text-center mb-4">
                 <h1 id="quiz-title" class="text-2xl font-bold text-slate-800"></h1>
@@ -88,7 +86,6 @@
             </main>
         </div>
         
-        <!-- クイズ完了画面 -->
         <div id="result-screen" class="screen">
             <div class="text-center p-8 bg-white rounded-2xl shadow-xl">
                  <h2 class="text-2xl font-bold text-slate-800 mb-2">コースクリア！</h2>
@@ -113,11 +110,9 @@
             </div>
         </div>
 
-        <!-- 問題作成・編集画面 -->
         <div id="editor-screen" class="screen">
              <header class="text-center mb-6 flex justify-between items-center">
-                <div class="w-12"></div> <!-- Spacer -->
-                <h1 class="text-2xl font-bold text-slate-800">問題を作成・編集</h1>
+                <div class="w-12"></div> <h1 class="text-2xl font-bold text-slate-800">問題を作成・編集</h1>
                 <button id="show-tips-btn" class="text-teal-500 font-bold text-sm w-12">ヒント</button>
             </header>
             <div class="space-y-4 bg-white p-6 rounded-2xl shadow-lg">
@@ -126,8 +121,7 @@
                     <input type="text" id="course-title-input" placeholder="例: Python中級編" class="w-full p-2 border border-slate-300 rounded-md mt-1">
                 </div>
                 <div id="question-editor-list">
-                    <!-- 質問エディタがここに追加される -->
-                </div>
+                    </div>
                 <button id="add-question-btn" class="btn w-full bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">+ 問題を追加</button>
             </div>
              <div class="mt-6 space-y-3">
@@ -138,13 +132,11 @@
         </div>
     </div>
     
-    <!-- Tips Modal -->
     <div id="tips-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
             <button id="close-tips-btn" class="absolute top-3 right-4 text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
             <div id="tips-content">
-                <!-- Tips content will be dynamically inserted here -->
-            </div>
+                </div>
             <div class="flex justify-between items-center mt-6">
                 <button id="prev-tip-btn" class="btn bg-slate-200 text-slate-700 px-4 py-2 rounded-lg">&lt; 前へ</button>
                 <p id="tip-pagination" class="text-sm text-slate-500 font-semibold"></p>
@@ -246,25 +238,119 @@
             });
             document.getElementById(screenId).classList.add('active');
         }
+        
+        // --- BGM再生機能 (新規追加) ---
+        function playBGM() {
+            const bgmPlayer = document.getElementById('bgm-player');
+            if (bgmPlayer) {
+                // ブラウザの自動再生ポリシーに対応
+                const playPromise = bgmPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.warn("BGMの自動再生がブロックされました。ユーザーの操作後に再生を試みます。", error);
+                        // ユーザーが画面を初めてクリックしたときに再生を試みる
+                        document.body.addEventListener('click', () => {
+                            if (bgmPlayer.paused) {
+                                bgmPlayer.play();
+                            }
+                        }, { once: true });
+                    });
+                }
+            }
+        }
 
-        // --- Pyodide & Initialization ---
+        // --- Pyodide & Initialization (修正) ---
         async function initializePyodide() {
             pyodide = await loadPyodide();
             loaderOverlay.style.opacity = '0';
             setTimeout(() => loaderOverlay.style.display = 'none', 300);
-            loadQuizzes();
+            
+            // BGM再生処理を呼び出し
+            playBGM();
+
+            await loadQuizzes(); // 非同期に変更したため await を追加
             renderCourseList();
             navigateTo('home-screen');
         }
         
         // --- Quiz Management (Load, Save, Render) ---
-        function loadQuizzes() {
+
+        // loadQuizzes を async に変更 (修正)
+        async function loadQuizzes() {
             const storedQuizzes = localStorage.getItem('codeEasyQuizzes');
-            quizSets = storedQuizzes ? JSON.parse(storedQuizzes) : defaultQuizData;
+            // デフォルトクイズをコピーして quizSets を初期化
+            quizSets = { ...defaultQuizData };
+            
+            // ローカルストレージのクイズを追加
+            if(storedQuizzes) {
+                 const userQuizzes = JSON.parse(storedQuizzes);
+                 Object.assign(quizSets, userQuizzes);
+            }
+
+            // --- 追加機能：外部JSONの読み込み ---
+            try {
+                // 1. questions/index.json を読み込む
+                const indexResponse = await fetch('questions/index.json');
+                if (!indexResponse.ok) {
+                    // index.json がない場合は、デフォルトクイズのみ使用する
+                    console.log("questions/index.json が見つかりません。外部クイズは読み込みません。");
+                    return; 
+                }
+                
+                const quizFileList = await indexResponse.json();
+                
+                if (Array.isArray(quizFileList)) {
+                    // 2. index.json に記載されている各クイズファイルを読み込む
+                    const fetchPromises = quizFileList.map(async (fileName) => {
+                        try {
+                            const quizResponse = await fetch(`questions/${fileName}`);
+                            if (!quizResponse.ok) {
+                                console.error(`クイズファイル ${fileName} の読み込みに失敗しました。`);
+                                return null;
+                            }
+                            const quizData = await quizResponse.json();
+                            
+                            // 簡易的なバリデーション
+                            if (quizData.title && Array.isArray(quizData.questions)) {
+                                const quizId = `external-${fileName.replace('.json', '')}`;
+                                return { id: quizId, data: { language: 'python', ...quizData } };
+                            } else {
+                                console.warn(`ファイル ${fileName} は無効な形式です。`);
+                                return null;
+                            }
+                        } catch (err) {
+                            console.error(`クイズファイル ${fileName} の処理中にエラーが発生しました:`, err);
+                            return null;
+                        }
+                    });
+                    
+                    const loadedQuizzes = await Promise.all(fetchPromises);
+                    
+                    // 成功したクイズのみ quizSets に追加
+                    loadedQuizzes.forEach(quiz => {
+                        if (quiz) {
+                            quizSets[quiz.id] = quiz.data;
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error("外部クイズの読み込み中にエラーが発生しました:", err);
+                // エラーが発生しても、デフォルトとローカルストレージのクイズで続行する
+            }
+            // --- 追加機能ここまで ---
         }
 
+        // saveQuizzes を修正 (外部クイズとデフォルトクイズを保存対象外に)
         function saveQuizzes() {
-            localStorage.setItem('codeEasyQuizzes', JSON.stringify(quizSets));
+            // 現在の quizSets から、保存対象のクイズ（custom- または imported-）のみを抽出
+            const quizzesToSave = {};
+            Object.keys(quizSets).forEach(key => {
+                if (key.startsWith('custom-') || key.startsWith('imported-')) {
+                    quizzesToSave[key] = quizSets[key];
+                }
+            });
+            
+            localStorage.setItem('codeEasyQuizzes', JSON.stringify(quizzesToSave));
         }
 
         function getLanguageIcon(language) {
@@ -276,6 +362,7 @@
 
         function renderCourseList() {
             courseList.innerHTML = '';
+            // 読み込んだすべてのクイズセットを表示
             Object.keys(quizSets).forEach(id => {
                 const course = quizSets[id];
                 const courseCard = document.createElement('div');
@@ -298,6 +385,11 @@
         // --- Quiz Gameplay ---
         function startQuiz(quizId) {
             currentQuizData = quizSets[quizId];
+            if (!currentQuizData) {
+                alert('クイズデータの読み込みに失敗しました。');
+                navigateTo('home-screen');
+                return;
+            }
             currentQuestionIndex = 0;
             correctAnswersCount = 0;
             quizStartTime = Date.now();
@@ -410,13 +502,13 @@ f.getvalue()`;
                 </div>
                 <textarea class="w-full p-2 border rounded mt-1" rows="3" placeholder="コードを入力 (例: print(@__@))">${q.question}</textarea>
                 <div class="grid grid-cols-2 gap-2 mt-2">
-                    ${q.options.map((opt, i) => `<input type="text" value="${opt}" class="w-full p-2 border rounded" placeholder="選択肢 ${i + 1}">`).join('')}
+                    ${q.options.map((opt, i) => `<input type="text" value="${opt.replace(/"/g, '&quot;')}" class="w-full p-2 border rounded" placeholder="選択肢 ${i + 1}">`).join('')}
                 </div>
                 <select class="w-full p-2 border rounded mt-2">
-                    ${q.options.map((opt, i) => `<option value="${opt}" ${opt === q.answer ? 'selected' : ''}>正解: 選択肢 ${i + 1}</option>`).join('')}
+                    ${q.options.map((opt, i) => `<option value="${opt.replace(/"/g, '&quot;')}" ${opt === q.answer ? 'selected' : ''}>正解: 選択肢 ${i + 1}</option>`).join('')}
                 </select>
-                <input type="text" value="${q.explanation}" class="w-full p-2 border rounded mt-2" placeholder="解説">
-                <input type="text" value="${q.expectedOutput}" class="w-full p-2 border rounded mt-2" placeholder="実行結果の例">
+                <input type="text" value="${q.explanation.replace(/"/g, '&quot;')}" class="w-full p-2 border rounded mt-2" placeholder="解説">
+                <input type="text" value="${q.expectedOutput.replace(/"/g, '&quot;')}" class="w-full p-2 border rounded mt-2" placeholder="実行結果の例">
             `;
             questionEditorList.appendChild(questionDiv);
             
@@ -456,7 +548,7 @@ f.getvalue()`;
             
             const quizId = `custom-${Date.now()}`;
             quizSets[quizId] = { title, questions, language: 'python' }; // Currently only supports Python
-            saveQuizzes();
+            saveQuizzes(); // ここで保存
             startQuiz(quizId);
         }
 
@@ -474,7 +566,7 @@ f.getvalue()`;
                     
                     const quizId = `imported-${Date.now()}`;
                     quizSets[quizId] = { language: 'python', ...quizData };
-                    saveQuizzes();
+                    saveQuizzes(); // ここで保存
                     renderCourseList();
                     alert(`「${quizData.title}」が正常にインポートされました。`);
                 } catch (err) {
@@ -526,7 +618,12 @@ f.getvalue()`;
             navigateTo('home-screen');
         });
         nextButton.onclick = showNextQuestion;
-        restartButton.onclick = () => startQuiz(Object.keys(quizSets).find(key => quizSets[key].title === currentQuizData.title));
+        restartButton.onclick = () => {
+            const currentQuizId = Object.keys(quizSets).find(key => quizSets[key].title === currentQuizData.title);
+            if(currentQuizId) {
+                startQuiz(currentQuizId);
+            }
+        };
         createQuizBtn.onclick = openQuizEditor;
         importFileInput.onchange = handleImport;
         addQuestionBtn.onclick = () => addQuestionEditor();

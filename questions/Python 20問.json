@@ -1,0 +1,246 @@
+{
+  "title": "Python基礎問題20問",
+  "questions": [
+    {
+      "question": "#問1: 文字列の出力\nprint(\"Hello, \" + @__@ + \"!\")",
+      "options": [
+        "\"Python\"",
+        "\"World\"",
+        "\"123\"",
+        "\"Code\""
+      ],
+      "answer": "\"World\"",
+      "explanation": "文字列連結により「Hello, World!」を出力します。",
+      "expectedOutput": "Hello, World!"
+    },
+    {
+      "question": "#問2: 変数への代入と加算\na = 5\nb = 10\nprint(a + @__@)",
+      "options": [
+        "a",
+        "b",
+        "15",
+        "\"b\""
+      ],
+      "answer": "b",
+      "explanation": "変数a(5)と変数b(10)の和である15を出力します。",
+      "expectedOutput": "15"
+    },
+    {
+      "question": "#問3: 算術演算（乗算）\nx = 6\ny = 7\nprint(x @__@ y)",
+      "options": [
+        "+",
+        "-",
+        "*",
+        "/"
+      ],
+      "answer": "*",
+      "explanation": "6と7の積である42を出力します。",
+      "expectedOutput": "42"
+    },
+    {
+      "question": "#問4: 算術演算（剰余）\nprint(17 @__@ 5)",
+      "options": [
+        "//",
+        "**",
+        "%",
+        "+"
+      ],
+      "answer": "%",
+      "explanation": "17を5で割った余りである2を出力します。",
+      "expectedOutput": "2"
+    },
+    {
+      "question": "#問5: リストの定義\nmy_list = @__@\nprint(type(my_list))",
+      "options": [
+        "(1, 2, 3)",
+        "[1, 2, 3]",
+        "{1, 2, 3}",
+        "{'a': 1}"
+      ],
+      "answer": "[1, 2, 3]",
+      "explanation": "Pythonでリストを定義するには角括弧[]を使用します。",
+      "expectedOutput": "<class 'list'>"
+    },
+    {
+      "question": "#問6: リストへの要素追加\nfruits = ['apple', 'banana']\nfruits.@__@('cherry')\nprint(fruits[2])",
+      "options": [
+        "insert",
+        "add",
+        "append",
+        "extend"
+      ],
+      "answer": "append",
+      "explanation": "リストの末尾に要素を追加するメソッドはappend()です。",
+      "expectedOutput": "cherry"
+    },
+    {
+      "question": "#問7: リストの要素アクセス\nnumbers = [10, 20, 30, 40]\nprint(numbers @__@)",
+      "options": [
+        "[1]",
+        "[0]",
+        "(-1)",
+        "{3}"
+      ],
+      "answer": "[1]",
+      "explanation": "リストのインデックス1の要素である20を出力します。",
+      "expectedOutput": "20"
+    },
+    {
+      "question8": "#問8: if文（条件分岐）\nscore = 75\nif score >= 80:\n    print('A')\n@__@ score >= 60:\n    print('B')\nelse:\n    print('C')",
+      "options": [
+        "else:",
+        "for",
+        "elif",
+        "while"
+      ],
+      "answer": "elif",
+      "explanation": "複数の条件を順に判定するためにelif（else if）を使用します。score=75は2番目の条件に合致し「B」が出力されます。",
+      "expectedOutput": "B"
+    },
+    {
+      "question": "#問9: forループ（繰り返し）\nsum_val = 0\nfor i in range(3):\n    sum_val += @__@\nprint(sum_val)",
+      "options": [
+        "1",
+        "i",
+        "2",
+        "3"
+      ],
+      "answer": "i",
+      "explanation": "range(3)は0, 1, 2を生成します。sum_valには0+1+2=3が計算されます。",
+      "expectedOutput": "3"
+    },
+    {
+      "question": "#問10: 文字列の長さ\ntext = \"coding\"\nlength = @__@(text)\nprint(length)",
+      "options": [
+        "size",
+        "count",
+        "len",
+        "length"
+      ],
+      "answer": "len",
+      "explanation": "文字列の長さを取得する組み込み関数はlen()です。「coding」は6文字です。",
+      "expectedOutput": "6"
+    },
+    {
+      "question": "#問11: 辞書の定義\nperson = {'name': 'Taro', 'age': 20}\nprint(person.@__@())",
+      "options": [
+        "items",
+        "values",
+        "keys",
+        "get"
+      ],
+      "answer": "keys",
+      "explanation": "辞書のすべてのキーを取得するメソッドはkeys()です。",
+      "expectedOutput": "dict_keys(['Taro', 20])"
+    },
+    {
+      "question": "#問12: 辞書の要素アクセス\nscores = {'math': 80, 'eng': 90}\nprint(scores @__@)",
+      "options": [
+        "['math']",
+        "('eng')",
+        "{'math'}",
+        "[0]"
+      ],
+      "answer": "['math']",
+      "explanation": "辞書のキー'math'に対応する値80を取得します。",
+      "expectedOutput": "80"
+    },
+    {
+      "question": "#問13: 関数定義\n@__@ greet():\n    print(\"Hi\")\ngreet()",
+      "options": [
+        "function",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer": "def",
+      "explanation": "Pythonで関数を定義するにはdefキーワードを使用します。",
+      "expectedOutput": "Hi"
+    },
+    {
+      "question": "#問14: 関数の引数\ndef add(a, b):\n    return a + b\nprint(add(5, @__@))",
+      "options": [
+        "\"3\"",
+        "3",
+        "b",
+        "\"a\""
+      ],
+      "answer": "3",
+      "explanation": "add関数に5と3を渡し、その和である8を返します。",
+      "expectedOutput": "8"
+    },
+    {
+      "question": "#問15: データ型の確認\nvalue = 3.14\nprint(@__@(value))",
+      "options": [
+        "len",
+        "str",
+        "type",
+        "int"
+      ],
+      "answer": "type",
+      "explanation": "変数valueのデータ型（float）を確認します。",
+      "expectedOutput": "<class 'float'>"
+    },
+    {
+      "question": "#問16: 文字列のインデックス\ns = \"Python\"\nprint(s @__@)",
+      "options": [
+        "[0]",
+        "[1]",
+        "[-1]",
+        "[6]"
+      ],
+      "answer": "[0]",
+      "explanation": "文字列のインデックス0の文字（先頭文字）である'P'を出力します。",
+      "expectedOutput": "P"
+    },
+    {
+      "question": "#問17: whileループ\ncount = 0\nwhile count < @__@:\n    print(count)\n    count += 1",
+      "options": [
+        "1",
+        "3",
+        "5",
+        "count"
+      ],
+      "answer": "3",
+      "explanation": "countが3未満の間、0、1、2を出力し続けます。",
+      "expectedOutput": "0\n1\n2"
+    },
+    {
+      "question": "#問18: 論理演算子\nresult = (10 > 5) and (3 @__@ 7)\nprint(result)",
+      "options": [
+        ">",
+        "==",
+        "<",
+        "!="
+      ],
+      "answer": "<",
+      "explanation": "10>5はTrue、3<7はTrueなので、and演算によりTrueが出力されます。",
+      "expectedOutput": "True"
+    },
+    {
+      "question": "#問19: f-string\nname = \"Ken\"\nage = 28\nprint(@__@'Name: {name}, Age: {age}')",
+      "options": [
+        "f",
+        "s",
+        "t",
+        "r"
+      ],
+      "answer": "f",
+      "explanation": "f-string（フォーマット済み文字列リテラル）を使用して変数値を埋め込みます。",
+      "expectedOutput": "Name: Ken, Age: 28"
+    },
+    {
+      "question": "#問20: タプルへの要素アクセス\ncolors = ('red', 'green', 'blue')\nprint(colors @__@)",
+      "options": [
+        "[2]",
+        "[0]",
+        "{2}",
+        "['blue']"
+      ],
+      "answer": "[2]",
+      "explanation": "タプルのインデックス2の要素である'blue'を出力します。",
+      "expectedOutput": "blue"
+    }
+  ],
+  "language": "python"
+}
