@@ -1,0 +1,66 @@
+{
+  "title": "Python初心者基礎問1",
+  "questions": [
+    {
+      "question": "#問1: 文字列の出力\nprint(\"Hello, \" + @__@ + \"!\")",
+      "options": [
+        "\"Python\"",
+        "\"World\"",
+        "\"123\"",
+        "\"Code\""
+      ],
+      "answer": "\"World\"",
+      "explanation": "文字列連結により「Hello, World!」を出力します。",
+      "expectedOutput": "Hello, World!"
+    },
+    {
+      "question": "#問2: 算術演算（剰余）\nprint(17 @__@ 5)",
+      "options": [
+        "//",
+        "**",
+        "%",
+        "+"
+      ],
+      "answer": "%",
+      "explanation": "17を5で割った余りである2を出力します。",
+      "expectedOutput": "2"
+    },
+    {
+      "question": "#問3: リストの要素アクセス\nnumbers = [10, 20, 30, 40]\nprint(numbers @__@)",
+      "options": [
+        "[1]",
+        "[0]",
+        "(-1)",
+        "{3}"
+      ],
+      "answer": "[1]",
+      "explanation": "リストのインデックス1の要素である20を出力します。",
+      "expectedOutput": "20"
+    },
+    {
+      "question": "#問4: if文（条件分岐）\nscore = 75\nif score >= 80:\n    print('A')\n@__@ score >= 60:\n    print('B')\nelse:\n    print('C')",
+      "options": [
+        "else:",
+        "for",
+        "elif",
+        "while"
+      ],
+      "answer": "elif",
+      "explanation": "複数の条件を順に判定するためにelifを使用します。score=75は2番目の条件に合致し「B」が出力されます。",
+      "expectedOutput": "B"
+    },
+    {
+      "question": "#問5: 関数定義\n@__@ greet():\n    print(\"Hi\")\ngreet()",
+      "options": [
+        "function",
+        "def",
+        "func",
+        "define"
+      ],
+      "answer": "def",
+      "explanation": "Pythonで関数を定義するにはdefキーワードを使用します。",
+      "expectedOutput": "Hi"
+    }
+  ],
+  "language": "python"
+}
